@@ -1,0 +1,106 @@
+from microbit import *
+from gesture import *
+from random import randint
+import neopixel
+
+gesture = Gesture()
+np = neopixel.NeoPixel(pin1, 30)
+
+i = 0
+happy = (50, 255, 105)
+angry = (255, 10, 0)
+sad = (50,0,255)
+surprised = (255, 200, 50)
+
+while True:
+    g = gesture.read()
+
+    if accelerometer.was_gesture('shake'):
+        display.clear()
+        for pixel_id in range(0, len(np)):
+            red = randint(0,100)
+            green = randint(0,100)
+            blue = randint(0,100)
+            np[pixel_id] = (red, green, blue)
+            np.show()
+            display.show(Image.CONFUSED)
+            sleep(100)
+
+    if g == 'clockwise':
+        display.clear()
+
+        for pixel_id in range(0, len(np)):
+            if i == 29:
+                if np[pixel_id] == happy:
+                    red = 50+(pixel_id*4)
+                    green = 255-(pixel_id*3)
+                    blue = 105-(pixel_id*3)
+                    np[pixel_id] = (red, green, blue)
+                    np.show()
+                    display.show(Image.FABULOUS)
+                    sleep(100)
+                elif np[pixel_id] == angry:
+                    red = 255-(pixel_id*2)
+                    green = 10+(pixel_id*2)
+                    blue = pixel_id*5
+                    np[pixel_id] = (red, green, blue)
+                    np.show()
+                    display.show(Image.FABULOUS)
+                    sleep(100)
+                elif np[pixel_id] == sad:
+                    red = 50+(pixel_id*5)
+                    green = 0
+                    blue = 255 -(pixel_id*5)
+                    np[pixel_id] = (red, green, blue)
+                    np.show()
+                    display.show(Image.FABULOUS)
+                    sleep(100)
+                elif np[pixel_id] == surprised:
+                    red = 255-(pixel_id*6)
+                    green = 200 -(pixel_id*5)
+                    blue = 50+(pixel_id*5)
+                    np[pixel_id] = (red, green, blue)
+                    np.show()
+                    display.show(Image.FABULOUS)
+                    sleep(100)
+
+
+    if g == 'down':
+        display.clear()
+        np.clear()
+        for i in range(30):
+            np[i] = happy
+            np.show()
+            display.show(Image.HAPPY)
+            sleep(100)
+
+    if g == 'up':
+        display.clear()
+        np.clear()
+        for i in range(30):
+            np[i] = angry
+            np.show()
+            display.show(Image.ANGRY)
+            sleep(100)
+
+    if g == 'left':
+        display.clear()
+        np.clear()
+        for i in range(30):
+            np[i] = sad
+            np.show()
+            display.show(Image.SAD)
+            sleep(100)
+
+    if g == 'right':
+        display.clear()
+        np.clear()
+        for i in range(30):
+            np[i] = surprised
+            np.show()
+            display.show(Image.SURPRISED)
+            sleep(100)
+
+    elif g == 'anticlockwise':
+        display.clear()
+        np.clear()
